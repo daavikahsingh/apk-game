@@ -1,0 +1,55 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
+public class ColorGame : MonoBehaviour
+{
+    public Text promptText;
+    public Text scoreText;
+
+    private string[] colors = { "red", "blue", "green", "yellow" };
+    private int playerScore = 0;
+    private int computerScore = 0;
+
+    void Start()
+    {
+        UpdateScoreText();
+        StartCoroutine(PlayGame());
+    }
+
+    IEnumerator PlayGame()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            string computerChoice = colors[Random.Range(0, colors.Length)];
+            promptText.text = "What is the color? Choose from: red, blue, green, yellow";
+            yield return new WaitForSeconds(1.5f);
+            // Wait for player input and compare with computerChoice
+            // Update playerScore or computerScore accordingly
+            UpdateScoreText();
+        }
+        // Display final score and winner
+        DisplayWinner();
+    }
+
+    void UpdateScoreText()
+    {
+        scoreText.text = "Player: " + playerScore + "  Computer: " + computerScore;
+    }
+
+    void DisplayWinner()
+    {
+        if (playerScore > computerScore)
+        {
+            promptText.text = "Congratulations! You win the game!";
+        }
+        else if (playerScore < computerScore)
+        {
+            promptText.text = "Computer wins the game!";
+        }
+        else
+        {
+            promptText.text = "It's a tie!";
+        }
+    }
+}
